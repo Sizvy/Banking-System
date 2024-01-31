@@ -16,5 +16,6 @@ namespace Bank.Business
         List<Account> GetAllAccounts();
         bool Deposit(string AccountNo, decimal amount);
         bool Withdraw(String AccountNo, decimal amount);
+        bool DoesExist(string AccountNo);
     }
 }

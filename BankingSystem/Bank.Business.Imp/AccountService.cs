@@ -22,10 +22,6 @@ namespace Bank.Business.Imp
             {
                 return false;
             }
-            if(account.AccountNo.Length != 16)
-            {
-                return false;
-            }
             return _accountRepository.CreateAccount(account);
         }
 
@@ -37,6 +33,11 @@ namespace Bank.Business.Imp
         public bool Deposit(string AccountNo, decimal amount)
         {
             return _accountRepository.Deposit(AccountNo, amount);
+        }
+
+        public bool DoesExist(string AccountNo)
+        {
+            return _accountRepository.DoesExist(AccountNo);
         }
 
         public Account? GetAccountByAccountNumber(string AccountNo)

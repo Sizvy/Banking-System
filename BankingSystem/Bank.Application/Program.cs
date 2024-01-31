@@ -14,6 +14,16 @@ namespace Bank.App
                 case "1":
                     Console.WriteLine("Enter your account number (16 digits):");
                     var accountNumber = Console.ReadLine();
+                    if(accountNumber.Length != 16)
+                    {
+                        Console.WriteLine("Account number must be 16 digits");
+                        break;
+                    }
+                    if(accountService.DoesExist(accountNumber))
+                    {
+                        Console.WriteLine("Account already exists");
+                        break;
+                    }
                     Console.WriteLine("Enter your name:");
                     var name = Console.ReadLine();
                     Console.WriteLine("Enter your phone number:");
@@ -22,6 +32,11 @@ namespace Bank.App
                     var accountType = Console.ReadLine();
                     Console.WriteLine("Enter your initial balance (at least 500 BDT)");
                     var balance = Convert.ToDecimal(Console.ReadLine());
+                    if(balance < 500)
+                    {
+                        Console.WriteLine("Initial balance must be at least 500 BDT");
+                        break;
+                    }
                     var account = new Account
                     {
                         AccountNo = accountNumber,
@@ -43,6 +58,11 @@ namespace Bank.App
                     break;
                 case "2":
                     var accounts = accountService.GetAllAccounts();
+                    if(accounts.Count == 0)
+                    {
+                        Console.WriteLine("No accounts found");
+                        break;
+                    }
                     foreach (var single_account in accounts)
                     {
                         Console.WriteLine($"Account No: {single_account.AccountNo}");
@@ -86,6 +106,11 @@ namespace Bank.App
                 case "4":
                     Console.WriteLine("Enter your account number");
                     accountNumber = Console.ReadLine();
+                    if(!accountService.DoesExist(accountNumber))
+                    {
+                        Console.WriteLine("Account does not exist");
+                        break;
+                    }
                     result = accountService.DeleteAccount(accountNumber);
                     if (result)
                     {
@@ -99,6 +124,11 @@ namespace Bank.App
                 case "5":
                     Console.WriteLine("Enter your account number");
                     accountNumber = Console.ReadLine();
+                    if(!accountService.DoesExist(accountNumber))
+                    {
+                        Console.WriteLine("Account does not exist");
+                        break;
+                    }
                     Console.WriteLine("Enter the amount to deposit");
                     var amount = Convert.ToDecimal(Console.ReadLine());
                     result = accountService.Deposit(accountNumber, amount);
@@ -114,6 +144,11 @@ namespace Bank.App
                 case "6":
                     Console.WriteLine("Enter your account number");
                     accountNumber = Console.ReadLine();
+                    if (!accountService.DoesExist(accountNumber))
+                    {
+                        Console.WriteLine("Account does not exist");
+                        break;
+                    }
                     Console.WriteLine("Enter the amount to withdraw");
                     amount = Convert.ToDecimal(Console.ReadLine());
                     result = accountService.Withdraw(accountNumber, amount);

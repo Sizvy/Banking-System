@@ -44,6 +44,17 @@ namespace Bank.Repository.Imp
             return true;
         }
 
+        public bool DoesExist(string AccountNo)
+        {
+            // search for the account
+            var accountToCheck = _accounts.FirstOrDefault(a => a.AccountNo == AccountNo);
+            if (accountToCheck == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public Account? GetAccountByAccountNumber(string accountNumber)
         {
             // search for the account
@@ -85,7 +96,7 @@ namespace Bank.Repository.Imp
             {
                 return false;
             }
-            if(accountToWithdraw.Balance < amount)
+            if(accountToWithdraw.Balance < amount || accountToWithdraw.Balance - amount < 500)
             {
                 return false;
             }
