@@ -12,7 +12,7 @@ Based on the user input, the following operations will be performed<br />
 6. Withdraw an amount from your account<br />
 7. Search for account<br />
 8. Exit<br />
-Handled corner cases are - <br />
+### Handled corner cases are - <br />
 1. Account Number should be of 16 digits <br \>
 2. Valid amount has to be given as input (minimum initial balance should be 500 BDT) <br \>
 3. Different account with the same account no cannot be created <br \>
