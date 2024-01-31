@@ -1,16 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bank.Business.Imp\Bank.Business.Imp.csproj" />
     <ProjectReference Include="..\Bank.Business\Bank.Business.csproj" />
     <ProjectReference Include="..\Bank.Model\Bank.Model.csproj" />
     <ProjectReference Include="..\Bank.Repository.Imp\Bank.Repository.Imp.csproj" />
     <ProjectReference Include="..\Bank.Repository\Bank.Repository.csproj" />
+    <ProjectReference Include="..\Bank.Util\Bank.Util.csproj" />
   </ItemGroup>
 
 </Project>
