@@ -31,10 +31,19 @@ namespace Bank.App
                     Console.WriteLine("Enter your account type:");
                     var accountType = Console.ReadLine();
                     Console.WriteLine("Enter your initial balance (at least 500 BDT)");
-                    var balance = Convert.ToDecimal(Console.ReadLine());
-                    if(balance < 500)
+                    decimal balance;
+                    try
                     {
-                        Console.WriteLine("Initial balance must be at least 500 BDT");
+                        balance = Convert.ToDecimal(Console.ReadLine());
+                        if (balance < 500)
+                        {
+                            Console.WriteLine("Initial balance must be at least 500 BDT");
+                            break;
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine("Invalid balance");
                         break;
                     }
                     var account = new Account
@@ -77,21 +86,24 @@ namespace Bank.App
                 case "3":
                     Console.WriteLine("Enter your account number");
                     accountNumber = Console.ReadLine();
+                    if(!accountService.DoesExist(accountNumber))
+                    {
+                        Console.WriteLine("Account does not exist");
+                        break;
+                    }
+                    Console.WriteLine("Only enter the value of the field you want to change. Otherwise leave it blank.");
                     Console.WriteLine("Enter your name");
-                    var name1 = Console.ReadLine();
+                    name = Console.ReadLine();
                     Console.WriteLine("Enter your phone number");
-                    var phoneNumber1 = Console.ReadLine();
+                    phoneNumber = Console.ReadLine();
                     Console.WriteLine("Enter your account type");
-                    var accountType1 = Console.ReadLine();
-                    Console.WriteLine("Enter your initial balance");
-                    var balance1 = Convert.ToDecimal(Console.ReadLine());
+                    accountType = Console.ReadLine();
                     var account1 = new Account
                     {
                         AccountNo = accountNumber,
-                        AccountName = name1,
-                        PhoneNo = phoneNumber1,
-                        AccountType = accountType1,
-                        Balance = balance1
+                        AccountName = name,
+                        PhoneNo = phoneNumber,
+                        AccountType = accountType,
                     };
                     result = accountService.UpdateAccount(account1);
                     if (result)
@@ -130,7 +142,16 @@ namespace Bank.App
                         break;
                     }
                     Console.WriteLine("Enter the amount to deposit");
-                    var amount = Convert.ToDecimal(Console.ReadLine());
+                    decimal amount;
+                    try
+                    {
+                        amount = Convert.ToDecimal(Console.ReadLine());
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine("Invalid amount");
+                        break;
+                    }
                     result = accountService.Deposit(accountNumber, amount);
                     if (result)
                     {
@@ -150,7 +171,15 @@ namespace Bank.App
                         break;
                     }
                     Console.WriteLine("Enter the amount to withdraw");
-                    amount = Convert.ToDecimal(Console.ReadLine());
+                    try
+                    {
+                        amount = Convert.ToDecimal(Console.ReadLine());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Invalid amount");
+                        break;
+                    }
                     result = accountService.Withdraw(accountNumber, amount);
                     if (result)
                     {
