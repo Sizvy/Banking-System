@@ -75,15 +75,11 @@ namespace Bank.Repository.Imp
             {
                 return false;
             }
-            if(account.AccountName != null)
+            if(account.AccountName != "")
                 accountToUpdate.AccountName = account.AccountName;
-            if(account.AccountType != null)
+            if(account.AccountType != "")
                 accountToUpdate.AccountType = account.AccountType;
-            if(account.Balance != null)
-                accountToUpdate.Balance = account.Balance;
-            if(account.CreationDate != null)
-                accountToUpdate.CreationDate = account.CreationDate;
-            if(account.PhoneNo != null)
+            if(account.PhoneNo != "")
                 accountToUpdate.PhoneNo = account.PhoneNo;
             return true;
         }
