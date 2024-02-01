@@ -77,8 +77,6 @@ namespace Bank.Repository.Imp
             }
             if(account.AccountName != "")
                 accountToUpdate.AccountName = account.AccountName;
-            if(account.AccountType != "")
-                accountToUpdate.AccountType = account.AccountType;
             if(account.PhoneNo != "")
                 accountToUpdate.PhoneNo = account.PhoneNo;
             return true;
