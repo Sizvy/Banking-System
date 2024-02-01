@@ -146,78 +146,47 @@ namespace Bank.App
                         Console.WriteLine("Account does not exist");
                         break;
                     }
+                    string? AccountType = accountService.GetAccountByAccountNumber(accountNumber).AccountType;
                     Console.WriteLine("Only enter the value of the field you want to change. Otherwise leave it blank.");
                     Console.WriteLine("Enter your name");
                     name = Console.ReadLine();
                     Console.WriteLine("Enter your phone number");
                     phoneNumber = Console.ReadLine();
-                    Console.WriteLine("Choose your account type:");
-                    Console.WriteLine("1. Current Account");
-                    Console.WriteLine("2. Saving Account");
-                    Console.WriteLine("3. Salary Account");
-
-                    if (!int.TryParse(Console.ReadLine(), out accountTypeOption) || accountTypeOption < 1 || accountTypeOption > 3)
+                    if(AccountType == "Current Account")
                     {
-                        Console.WriteLine("Invalid option. Please enter a number between 1 and 3.");
-                        break;
+                        account = new CurrentAccount
+                        {
+                            AccountNo = accountNumber,
+                            AccountName = name,
+                            PhoneNo = phoneNumber
+                        };
                     }
-
-                    switch (accountTypeOption)
+                    else if(AccountType == "Saving Account")
                     {
-                        case 1:
-                            account = new CurrentAccount
-                            {
-                                AccountNo = accountNumber,
-                                AccountName = name,
-                                PhoneNo = phoneNumber,
-                            };
-                            bool UpdateResult = accountService.UpdateAccount(account);
-                            if (UpdateResult)
-                            {
-                                Console.WriteLine("Account updated successfully");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Account updation failed");
-                            }
-                            break;
-                        case 2:
-                            account = new SavingAccount
-                            {
-                                AccountNo = accountNumber,
-                                AccountName = name,
-                                PhoneNo = phoneNumber,
-                            };
-                            UpdateResult = accountService.UpdateAccount(account);
-                            if (UpdateResult)
-                            {
-                                Console.WriteLine("Account updated successfully");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Account updation failed");
-                            }
-                            break;
-                        case 3:
-                            account = new SalaryAccount
-                            {
-                                AccountNo = accountNumber,
-                                AccountName = name,
-                                PhoneNo = phoneNumber,
-                            };
-                            UpdateResult = accountService.UpdateAccount(account);
-                            if (UpdateResult)
-                            {
-                                Console.WriteLine("Account updated successfully");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Account updation failed");
-                            }
-                            break;
-                        default:
-                            Console.WriteLine("Invalid option.");
-                            break;
+                        account = new SavingAccount
+                        {
+                            AccountNo = accountNumber,
+                            AccountName = name,
+                            PhoneNo = phoneNumber
+                        };
+                    }
+                    else
+                    {
+                        account = new SalaryAccount
+                        {
+                            AccountNo = accountNumber,
+                            AccountName = name,
+                            PhoneNo = phoneNumber
+                        };
+                    }
+                    bool UpdateResult = accountService.UpdateAccount(account);
+                    if (UpdateResult)
+                    {
+                        Console.WriteLine("Account updated successfully");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Account updation failed");
                     }
                     break;
                 case "4":
