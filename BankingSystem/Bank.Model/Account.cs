@@ -2,7 +2,7 @@
 
 namespace Bank.Model
 {
-    public class Account
+    public abstract class Account
     {
         [Key]
         [Required]

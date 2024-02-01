@@ -9,6 +9,7 @@ namespace Bank.App
     {
         public static void ProcessChoice(string choice, IAccountService accountService)
         {
+            
             switch (choice)
             {
                 case "1":
@@ -28,8 +29,18 @@ namespace Bank.App
                     var name = Console.ReadLine();
                     Console.WriteLine("Enter your phone number:");
                     var phoneNumber = Console.ReadLine();
-                    Console.WriteLine("Enter your account type:");
-                    var accountType = Console.ReadLine();
+                    Console.WriteLine("Choose your account type:");
+                    Console.WriteLine("1. Current Account");
+                    Console.WriteLine("2. Saving Account");
+                    Console.WriteLine("3. Salary Account");
+
+                    int accountTypeOption;
+                    if (!int.TryParse(Console.ReadLine(), out accountTypeOption) || accountTypeOption < 1 || accountTypeOption > 3)
+                    {
+                        Console.WriteLine("Invalid option. Please enter a number between 1 and 3.");
+                        break;
+                    }
+                    
                     Console.WriteLine("Enter your initial balance (at least 500 BDT)");
                     decimal balance;
                     try
@@ -46,24 +57,68 @@ namespace Bank.App
                         Console.WriteLine("Invalid balance");
                         break;
                     }
-                    var account = new Account
+                    Account account;
+                    switch (accountTypeOption)
                     {
-                        AccountNo = accountNumber,
-                        AccountName = name,
-                        PhoneNo = phoneNumber,
-                        AccountType = accountType,
-                        Balance = balance
-                    };
-
-                    var result = accountService.CreateAccount(account);
-                    if (result)
-                    {
-                        Console.WriteLine("Account created successfully");
+                        case 1:
+                            account = new CurrentAccount
+                            {
+                                AccountNo = accountNumber,
+                                AccountName = name,
+                                PhoneNo = phoneNumber,
+                                Balance = balance
+                            };
+                            bool creationresult = accountService.CreateAccount(account);
+                            if (creationresult)
+                            {
+                                Console.WriteLine("Account created successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Account creation failed");
+                            }
+                            break;
+                        case 2:
+                            account = new SavingAccount
+                            {
+                                AccountNo = accountNumber,
+                                AccountName = name,
+                                PhoneNo = phoneNumber,
+                                Balance = balance
+                            };
+                            creationresult = accountService.CreateAccount(account);
+                            if (creationresult)
+                            {
+                                Console.WriteLine("Account created successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Account creation failed");
+                            }
+                            break;
+                        case 3:
+                            account = new SalaryAccount
+                            {
+                                AccountNo = accountNumber,
+                                AccountName = name,
+                                PhoneNo = phoneNumber,
+                                Balance = balance
+                            };
+                            creationresult = accountService.CreateAccount(account);
+                            if (creationresult)
+                            {
+                                Console.WriteLine("Account created successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Account creation failed");
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("Invalid option.");
+                            break;
                     }
-                    else
-                    {
-                        Console.WriteLine("Account creation failed");
-                    }
+                    
                     break;
                 case "2":
                     var accounts = accountService.GetAllAccounts();
@@ -96,23 +151,73 @@ namespace Bank.App
                     name = Console.ReadLine();
                     Console.WriteLine("Enter your phone number");
                     phoneNumber = Console.ReadLine();
-                    Console.WriteLine("Enter your account type");
-                    accountType = Console.ReadLine();
-                    var account1 = new Account
+                    Console.WriteLine("Choose your account type:");
+                    Console.WriteLine("1. Current Account");
+                    Console.WriteLine("2. Saving Account");
+                    Console.WriteLine("3. Salary Account");
+
+                    if (!int.TryParse(Console.ReadLine(), out accountTypeOption) || accountTypeOption < 1 || accountTypeOption > 3)
                     {
-                        AccountNo = accountNumber,
-                        AccountName = name,
-                        PhoneNo = phoneNumber,
-                        AccountType = accountType,
-                    };
-                    result = accountService.UpdateAccount(account1);
-                    if (result)
-                    {
-                        Console.WriteLine("Account updated successfully");
+                        Console.WriteLine("Invalid option. Please enter a number between 1 and 3.");
+                        break;
                     }
-                    else
+
+                    switch (accountTypeOption)
                     {
-                        Console.WriteLine("Account updation failed");
+                        case 1:
+                            account = new CurrentAccount
+                            {
+                                AccountNo = accountNumber,
+                                AccountName = name,
+                                PhoneNo = phoneNumber,
+                            };
+                            bool UpdateResult = accountService.UpdateAccount(account);
+                            if (UpdateResult)
+                            {
+                                Console.WriteLine("Account updated successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Account updation failed");
+                            }
+                            break;
+                        case 2:
+                            account = new SavingAccount
+                            {
+                                AccountNo = accountNumber,
+                                AccountName = name,
+                                PhoneNo = phoneNumber,
+                            };
+                            UpdateResult = accountService.UpdateAccount(account);
+                            if (UpdateResult)
+                            {
+                                Console.WriteLine("Account updated successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Account updation failed");
+                            }
+                            break;
+                        case 3:
+                            account = new SalaryAccount
+                            {
+                                AccountNo = accountNumber,
+                                AccountName = name,
+                                PhoneNo = phoneNumber,
+                            };
+                            UpdateResult = accountService.UpdateAccount(account);
+                            if (UpdateResult)
+                            {
+                                Console.WriteLine("Account updated successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Account updation failed");
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("Invalid option.");
+                            break;
                     }
                     break;
                 case "4":
@@ -123,7 +228,7 @@ namespace Bank.App
                         Console.WriteLine("Account does not exist");
                         break;
                     }
-                    result = accountService.DeleteAccount(accountNumber);
+                    var result = accountService.DeleteAccount(accountNumber);
                     if (result)
                     {
                         Console.WriteLine("Account deleted successfully");
